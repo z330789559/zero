@@ -13,13 +13,13 @@ const subPath = '/platform/'
 
 const presetConfig = {
   localhost: {
-    publicPath: '/',
+    publicPath:  `${subPath}`,
   },
   staging: {
-    publicPath: `http://ovine.igroupes.com${subPath}`,
+    publicPath: `${subPath}`,
   },
   production: {
-    publicPath: `http://ovine.igroupes.com${subPath}`,
+    publicPath: `${subPath}`,
   },
 }
 

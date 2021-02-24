@@ -19,7 +19,7 @@ import globalStyle from '~/styled/global'
 
 // 定义用到的主题变量, 可以扩展需要的主题
 declare module 'styled-components' {
-  export interface DefaultTheme extends AppThemeVariable {}
+  export interface DefaultTheme extends AppThemeVariable { }
 }
 
 // 存在 APP 实例多次创建的情况

@@ -238,7 +238,9 @@ const orgSchema = {
           data: {
             // eslint-disable-next-line
             '&': '${config}',
+            // eslint-disable-next-line
             user_id: '${user.id}',
+            // eslint-disable-next-line
             username: '${user.username}',
           },
           body: {

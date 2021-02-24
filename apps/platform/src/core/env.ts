@@ -8,13 +8,14 @@ const env = {
   default: {
     disableLimit: true,
     domains: {
-      api: 'https://ovine.igroupes.com', // ovine api 地址
+      api: 'http://121.89.194.107:5222', // ovine api 地址
     },
   },
   // 本地开发
   localhost: {
+    disableLimit: true,
     domains: {
-      api: 'http://39.105.197.166:5288',
+      api: 'http://121.89.194.107:5222',
     },
     // 日志配置
     logger: {
@@ -25,14 +26,15 @@ const env = {
   // 测试环境
   staging: {
     domains: {
-      api: 'http://39.105.197.166:5288',
+      api: 'http://121.89.194.107:5222',
     },
   },
   // 生产环境
   production: {
-    isProd: true,
+    disableLimit: true,
+    isProd: false, // 标示是生产环境
     domains: {
-      api: 'https://ovine.igroupes.com',
+      api: 'http://sass.yffrom.com',
     },
   },
 }

@@ -51,8 +51,8 @@ export const getLink = (type: LinkType, orgId?: string, extra?: any): string => 
       return orgId
         ? `${orgPathPrefix}${orgId}/setting?#userInfo`
         : isSysAdminRoute()
-        ? '/system/admin/self?#userInfo'
-        : '/system/self?#userInfo'
+          ? '/system/admin/self?#userInfo'
+          : '/system/self?#userInfo'
     case 'home':
       return orgId ? `${orgPathPrefix}${orgId}/application` : '/'
     case 'orgRole':

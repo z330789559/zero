@@ -1,4 +1,6 @@
-import { defaults, pick } from 'lodash'
+import { defaults, pick, get } from 'lodash'
+
+import { matchPath } from 'react-router-dom'
 
 import { getStore, setStore } from '@core/utils/store'
 
@@ -54,6 +56,13 @@ export function syncAppInfo(info) {
     ...info,
   }
 }
+// 获取组织ID
+export const getUrlOrgId = (): string => {
+  const matched = matchPath(window.location.pathname, {
+    path: '/platform/app/:orgId',
+  })
+  return get(matched, 'params.orgId') || ''
+}
 
 export function getAppInfo() {
   return store.appInfo
@@ -64,7 +73,7 @@ export function getOrgInfo() {
 }
 
 export function getOrgId() {
-  return store.orgInfo.orgId
+  return store.orgInfo.orgId || getUrlOrgId()
 }
 
 export function setHomePageId(id: string) {

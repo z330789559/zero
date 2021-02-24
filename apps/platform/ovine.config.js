@@ -13,8 +13,8 @@ module.exports = (option) => {
 
   const publicPathMap = {
     localhost: `http://localhost:${port}${subPath}`,
-    staging: `http://ovine.igroupes.com${subPath}`,
-    production: 'https://cdn-igroupes.com/ovine/',
+    staging: `${subPath}`,
+    production:  `${subPath}`,
   }
 
   const config = {
@@ -38,4 +38,4 @@ module.exports = (option) => {
   }
 
   return config
-}
+} 

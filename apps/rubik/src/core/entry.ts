@@ -3,7 +3,7 @@
 import asideLayout from '~/components/layout'
 
 import { loginRoute } from './constants'
-import { onAuth } from './user'
+// import { onAuth } from './user'
 import { getLink } from './utils'
 
 const entry = [
@@ -16,7 +16,7 @@ const entry = [
     type: 'private-route', // 鉴权路由
     path: '/',
     redirect: loginRoute,
-    onAuth, // 每次页面鉴权 需要调用的认证方法
+    // onAuth, // 每次页面鉴权 需要调用的认证方法
     children: {
       type: 'switch-route',
       children: [
