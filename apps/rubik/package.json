@@ -5,8 +5,9 @@
   "license": "MIT",
   "scripts": {
     "gen:static": "node-sass -v && yarn scss && yarn dll && cp -rf ./.ovine ../platform/",
-    "start": "ovine dev --mock --host 0.0.0.0 --port 7062 --no-hot",
+    "start": "ovine dev --host 0.0.0.0 --port 7062 --no-hot",
     "build:staging": "yarn eslint && ovine build --env=staging",
+    "build:prod": "yarn eslint && ovine build --env=production",
     "test:build": "yarn cp:lib && ovine build --bundle-analyzer",
     "open:dist": "http-server ./dist -i -g -c5 -o / -p 7051 -P http://0.0.0.0:7051?",
     "ovine": "ovine",

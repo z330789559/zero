@@ -7,4 +7,11 @@ module.exports = {
     jsonpFunction: `webpackJsonp_${name}`,
     globalObject: 'window',
   },
+  devServer:{
+    proxy: {
+
+      '/query' : 'http://152.32.172.63:8888'
+    }
+  }
+  
 }

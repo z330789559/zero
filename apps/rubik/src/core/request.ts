@@ -6,19 +6,34 @@
  */
 
 // import logger from '@core/utils/logger'
+import { toast } from 'amis'
+
+import { publish } from '@core/utils/message'
 import { Request } from '@core/utils/request'
-import { getStore } from '@core/utils/store'
+import { getStore, clearStore } from '@core/utils/store'
 import { app } from '@ovine/core/lib/app'
 // import { app } from '@ovine/core/lib/app'
 import { str2function } from '@ovine/core/lib/utils/tool'
 
 import { getApiQuery } from './api/utils'
 import { getAppInfo } from './common'
-import { storeKey } from './constants'
+import { storeKey, appLoginRoute, msgKey } from './constants'
 
 // 日志模块 https://ovine.igroupes.com/org/docs/modules/logger
 // const log = logger.getLogger('app:request')
+// 退出登录
+export function logout(option) {
+  const { tip = '您已经成功退出登录', loginEnv = 'manager' } = option || {}
 
+
+  if (loginEnv === 'manager') {
+    app.routerHistory.push(appLoginRoute)
+  } else if (loginEnv === 'assest') {
+    app.routerHistory.push('/system/assestlogin')
+  }
+  toast.info(tip, '系统提示')
+  clearStore(storeKey.auth)
+}
 const appRequestIns = new Request()
 
 const onExtraReqHook = (type: string, props: any): any => {
@@ -75,13 +90,77 @@ const onExtraReqHook = (type: string, props: any): any => {
   return false
 }
 
+const backadminResponseAdpater = (result) => {
+  if ((result && result.success && result.obj)) {
+    return {
+      code: 0,
+      msg: '',
+      ...JSON.parse(result.obj),
+      items: result.obj.data
+
+    }
+  }
+  if (result.total_size) {
+    result.total = result.total_size
+    delete result.total_size
+  }
+  return {
+    code: 0,
+    msg: '',
+    data: result
+  }
+}
+const backadminRequestAdaptor = (data) => {
+  if (!data) { return {} }
+  const newData: {
+    sort?: any, order?: any, rows?: any
+  } = {}
+  Object.keys(data).forEach((key) => {
+    if (key === 'orderBy') {
+      newData.sort = data[key]
+    } else
+      if (key === 'orderDir') {
+        newData.order = data[key]
+      } else
+        if (key === 'perPage') {
+          newData.rows = data[key]
+        } else {
+          newData[key] = data[key]
+        }
+
+
+  })
+  return newData
+}
+
+const adaptors = {
+  backadminRequestAdaptor,
+  backadminResponseAdpater
+}
+const loginEnv = {
+  'manager': 'manager',
+  'assest': 'assest'
+}
 // 请求准备阶段 回调
 appRequestIns.onPreRequest = (option) => {
   const extraEeqRes = onExtraReqHook('onPreRequest', { option })
   if (extraEeqRes) {
     return extraEeqRes
   }
+  if (option.api.indexOf('manage') > -1) {
+    option.data = adaptors.backadminRequestAdaptor(option.data)
+  }
 
+  if (option.api.indexOf('assest') > -1) {
+    const tokenObject = getStore<{ Token: string }>(storeKey.assestToken)
+    if (tokenObject && tokenObject.Token) {
+      option.headers = {
+        ...option.headers,
+        'otoken': tokenObject.Token
+      }
+    }
+
+  }
   option.mock = false // 全局控制是否开启 mock， 必须在 ovine cli --mock 选项开启的情况下，才有效
   const { method, data = {} } = option
 
@@ -103,7 +182,7 @@ appRequestIns.onPreRequest = (option) => {
 appRequestIns.onRequest = (option) => {
   const { key, token } = getStore(storeKey.auth) || {}
   // 开启携带 cookies 信息
-  option.fetchOptions.credentials = 'include'
+  option.credentials = 'include'
 
   if (key) {
     option.headers[key] = token
@@ -114,6 +193,28 @@ appRequestIns.onRequest = (option) => {
 
 // 接收到请求正常结果 回调
 appRequestIns.onSuccess = (source, option, response) => {
+  if (source.success !== undefined && !source.success && source.msg.length > 0 && source.status !== 0) {
+    return toast.info(source.msg, '系统提示')
+
+  }
+  if (source && source.code === 401 && source.msg.indexOf('login') > -1 && option.api.indexOf('manager') > -1) {
+    publish(msgKey.updateLoginEnv, loginEnv.manager)
+    return logout({
+      tip: '登录过期',
+      useApi: false
+    })
+  }
+  if (source && (source.ErrorMsg === 'no otoken' || source.ErrorNo === -10) && option.api.indexOf('assest') > -1) {
+    publish(msgKey.updateLoginEnv, loginEnv.assest)
+    return logout({
+      tip: '登录过期',
+      loginEnv: loginEnv.assest,
+      useApi: false
+    })
+  }
+  if (option.api.indexOf('manager') > -1 || option.api.indexOf('assest') > -1) {
+    source = adaptors.backadminResponseAdpater(source)
+  }
   const extraEeqRes = onExtraReqHook('onSuccess', { source, option, response })
   if (extraEeqRes) {
     return extraEeqRes

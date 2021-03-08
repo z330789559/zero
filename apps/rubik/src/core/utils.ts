@@ -8,7 +8,7 @@ import { app } from '@core/app'
 import { jumpTo } from '@core/routes/exports'
 
 import { getOrgId } from './common'
-import { loginRoute, orgPathPrefix, relation, sysAdmRoutePrefix } from './constants'
+import { loginRoute, orgPathPrefix, relation, sysAdmRoutePrefix, applicationPrefix } from './constants'
 
 // 获取APPID
 export const getAppId = (): string => {
@@ -42,7 +42,7 @@ export const isSysAdminRoute = (pathname: string = window.location.pathname): bo
   return pathname.startsWith(`${app.constants.routePrefix.slice(0, -1)}${sysAdmRoutePrefix}`)
 }
 
-type LinkType = 'home' | 'login' | 'selfInfo' | 'orgRole' | 'appSystem'
+type LinkType = 'home' | 'login' | 'selfInfo' | 'orgRole' | 'appSystem' | 'app'
 export const getLink = (type: LinkType, orgId?: string, extra?: any): string => {
   switch (type) {
     case 'login':
@@ -60,6 +60,9 @@ export const getLink = (type: LinkType, orgId?: string, extra?: any): string => 
     case 'appSystem':
       // 共用参数第二参数
       return `${sysAdmRoutePrefix}${extra || orgId}`
+    case 'app':
+      // 共用参数第二参数
+      return `${applicationPrefix}${extra || orgId}`
     default:
       return '/'
   }

@@ -2,7 +2,7 @@
 
 import asideLayout from '~/components/layout'
 
-import { loginRoute } from './constants'
+import { loginRoute, appLoginRoute } from './constants'
 // import { onAuth } from './user'
 import { getLink } from './utils'
 
@@ -12,6 +12,8 @@ const entry = [
     path: loginRoute,
     pathToComponent: true,
   },
+
+
   {
     type: 'private-route', // 鉴权路由
     path: '/',
@@ -20,6 +22,16 @@ const entry = [
     children: {
       type: 'switch-route',
       children: [
+        {
+          type: 'preset-route', // 路由组件
+          path: appLoginRoute,
+          pathToComponent: true,
+        },
+        {
+          type: 'preset-route', // 路由组件
+          path: '/system/assestlogin',
+          pathToComponent: '/system/assestlogin',
+        },
         {
           type: 'preset-route',
           exact: true,

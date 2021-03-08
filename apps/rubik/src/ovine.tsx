@@ -5,9 +5,10 @@ import ReactDOM from 'react-dom'
 import { app } from '@core/app'
 import { AppConfig } from '@core/app/types'
 import { App } from '@core/components/app'
+import { storage } from '@core/constants'
 import { AppThemeVariable } from '@core/styled/themes/types'
 import { initLogger } from '@core/utils/logger'
-
+import { setStore } from '@core/utils/store'
 import { DeepPartial } from '@core/utils/types'
 
 import { schemaDefinitions } from '~/core/amis'
@@ -44,7 +45,7 @@ const appConfig: DeepPartial<AppConfig> = {
     affixOffsetTop: 60,
   },
 }
-
+setStore(storage.appTheme, 'cxd')
 const renderOvineApp = (props) => {
   app.create(cloneDeep(appConfig) as AppConfig).then(() => {
     const { container } = props

@@ -73,9 +73,10 @@ export default () => {
       d.loading = true
     })
 
+    const type = isAppIsolation(true) ? getAppUniType('user') : getOrgUniType('user')
     sysUserLoginApi({
       ...inputs,
-      type: isAppIsolation(true) ? getAppUniType('user') : getOrgUniType('user'),
+      type,
       onlyData: false,
     }).then((source: any) => {
       setState((d) => {
@@ -88,7 +89,6 @@ export default () => {
       }
       setStore(storeKey.auth, data.id)
       setUserInfo(data)
-
       history.replace('/')
     })
   }

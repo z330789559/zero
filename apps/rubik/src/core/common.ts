@@ -59,9 +59,17 @@ export function syncAppInfo(info) {
 // 获取组织ID
 export const getUrlOrgId = (): string => {
   const matched = matchPath(window.location.pathname, {
-    path: '/platform/app/:orgId',
+    path: '(/platform)?/app/:orgId/system',
   })
   return get(matched, 'params.orgId') || ''
+}
+
+// 获取组织ID
+export const getUrlAppId = (): string => {
+  const matched = matchPath(window.location.pathname, {
+    path: '/platform/app/:appId/',
+  })
+  return get(matched, 'params.appId') || ''
 }
 
 export function getAppInfo() {
@@ -87,7 +95,7 @@ export function getHomePageId() {
 export function isAppIsolation(exact: boolean = false, appInfo: any = store.appInfo) {
   // 未在 qiankun 中，默认为独立应用，仅在测试环境有效，生产环境不允许篡改 isolation 独立应用功能。
   const isDevIsolation = process.env.NODE_ENV !== 'production' && !runWithQianKun()
-
+  if (isDevIsolation) {return isDevIsolation}
   const isExactIsolation = isStrTrue(appInfo.isolation)
 
   if (exact === true) {

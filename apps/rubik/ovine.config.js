@@ -25,6 +25,17 @@ module.exports = (option) => {
     devServer: {
       publicPath: subPath,
       openPage: '/platform/app',
+      proxy: {
+        '/manager': 'http://127.0.0.1:8080',
+        '/assest' : {
+          'target':'http://152.32.172.63:8888',
+          'pathRewrite': {'/assest':'/'}
+                },
+        '/chain' : {
+          'target':'http://121.89.194.107:8011',
+          'pathRewrite': {'/chain':'/'}
+                }        
+        }
     },
     ui: {
       initTheme: 'cxd',

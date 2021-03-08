@@ -2,9 +2,11 @@ import { ApiType } from './types'
 
 export const appRootId = 'app-root'
 export const appRootSelector = `#${appRootId}`
-export const orgPathPrefix = '/platform/center/org/'
+export const orgPathPrefix = '/platform/center/app/'
 export const sysAdmRoutePrefix = '/system/admin/'
+export const applicationPrefix = '/app/sass/'
 export const loginRoute = '/system/login'
+export const appLoginRoute = '/system/applogin'
 export const selfInfoRoute = '/system/self'
 export const defUserAvatar = 'http://static.igroupes.com/default_avatar.jpg'
 
@@ -17,12 +19,16 @@ export const storeKey = {
   siteCustom: 'appSiteCustomStore',
   orgInfo: 'orgInfoStore',
   appInfo: 'appInfoStore',
+  assestToken: 'assestToken'
+
 }
 
 // 用于消息通知的key
 export const msgKey = {
   updateSelfInfo: 'updateSelfInfoMsg',
   updateAppCustom: 'uupdateAppCustomMsg',
+  updateAuthLoginCode: 'updateAuthLoginCode',
+  updateLoginEnv: 'updateLoginEnv'
 }
 
 export const entityType = {

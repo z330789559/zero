@@ -18,6 +18,7 @@ const env = {
     disableLimit: true,
     domains: {
       api: 'http://121.89.194.107:5222',
+      server: '/'
     },
     // 日志配置
     logger: {
@@ -30,6 +31,7 @@ const env = {
     disableLimit: true,
     domains: {
       api: 'http://121.89.194.107:5222',
+      server: '/'
     },
   },
   // 生产环境
@@ -37,7 +39,8 @@ const env = {
     disableLimit: true,
     isProd: false, // 标示是生产环境
     domains: {
-      api: 'http://sass.yffrom.com',
+      api: 'http://platform.yffrom.com',
+      server: 'http://platform.yffrom.com'
     },
   },
 }

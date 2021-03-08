@@ -29,6 +29,18 @@ const welcomeRoute: RouteItem = {
   ignoreLimit: true,
 }
 
+
+const appLoginRoute: RouteItem = {
+  path: '/',
+  nodePath: 'applogin',
+  pathToComponent: '/system/applogin',
+  icon: 'iconfont icon-user-guide',
+  label: '欢迎使用',
+  exact: true,
+  highlightParent: false,
+  sideVisible: false,
+  ignoreLimit: true,
+}
 export const sysAdmRoutes: RouteItem[] = [
   {
     nodePath: 'system/admin',
@@ -167,8 +179,9 @@ export const getAppRoutes = (items: any[]) => {
   // TODO: 支持  设置多类别 侧边栏
   const rootRoute: RouteItem[] = withRootRoute
     ? []
-    : [{ ...welcomeRoute, sideVisible: !routeItems.length }]
+    : [{ ...welcomeRoute, sideVisible: !routeItems.length }, { ...appLoginRoute }]
   const routes = [
+
     {
       nodePath: '/',
       label: '',
