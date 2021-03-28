@@ -37,7 +37,7 @@ export function getUserInfo() {
 // 判断用户是否是登陆状态
 export function isLogin(type?: AppType) {
   const withAuth = !!getStore(storeKey.auth)
-  // debugger
+
   if (!withAuth) {
     return false
   }

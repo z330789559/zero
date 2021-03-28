@@ -27,6 +27,7 @@ function storeTest(props) {
   })
 }
 
+window.OVINE_DLL_REQUIRE_VER = '0.1.2-alpha.1'
 if (!window.__POWERED_BY_QIANKUN__) {
   renderOvineApp({})
 }

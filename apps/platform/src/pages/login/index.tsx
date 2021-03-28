@@ -76,10 +76,10 @@ export default () => {
     setState((d) => {
       d.loading = true
     })
-
+    const _type = isSysAdmLogin ? relation.sys.user.type : getOrgUniType('user', orgId)
     sysUserLoginApi({
       ...inputs,
-      type: isSysAdmLogin ? relation.sys.user.type : getOrgUniType('user', orgId),
+      type: _type,
       onlyData: false,
     }).then((source: any) => {
       setState((d) => {

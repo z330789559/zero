@@ -46,7 +46,7 @@ type LinkType = 'home' | 'login' | 'selfInfo' | 'app'
 export const getLink = (type: LinkType, orgId: string = getOrgId(), extra?: any): string => {
   switch (type) {
     case 'login':
-      return orgId ? `/org/${orgId}/login` : isSys() ? '/sys/admin' : '/sys/login'
+      return orgId ? `/org/${orgId}/login` : isSys('sys') ? '/sys/admin' : '/sys/login'
     case 'selfInfo':
       return orgId ? `/org/${orgId}/setting?t=1#userInfo` : '/sys/setting?t=1#userInfo'
     case 'home':

@@ -23,10 +23,10 @@ module.exports = (option) => {
     title: 'app',
     envModes: ['localhost', 'staging', 'production'], // 环境列表
     devServer: {
-      publicPath: subPath,
+      publicPath: subPath,  
       openPage: '/platform/app',
       proxy: {
-        '/manager': 'http://127.0.0.1:8080',
+        '/manager': 'http://platform.yffrom.com',
         '/assest' : {
           'target':'http://152.32.172.63:8888',
           'pathRewrite': {'/assest':'/'}

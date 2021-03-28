@@ -7,37 +7,42 @@ import ReactDOM from 'react-dom'
 
 import { app } from '@core/app'
 import { AppConfig } from '@core/app/types'
+import { storage } from '@core/constants'
 import { initLogger } from '@core/utils/logger'
 import { unsubscribeAll } from '@core/utils/message'
+import { setStore } from '@core/utils/store'
 import { DeepPartial } from '@core/utils/types'
 
 import App from './components/app'
 import { schemaDefinitions } from './core/amis'
 import appEnv from './core/env'
 import appRequestIns from './core/request'
-
 import './icons'
 
 const appRootId = '#app-root'
 
-const appConfig: DeepPartial<AppConfig> = {
+const appConfig: DeepPartial<AppConfig & { ui: { theme: string } }> = {
   request: appRequestIns,
   env: appEnv,
   constants: {
     routePrefix: '/platform/center/',
+  },
+  ui: {
+    theme: 'antd'
   },
   amis: {
     definitions: schemaDefinitions,
     affixOffsetTop: 60,
   },
 }
-
+setStore(storage.appTheme, 'cxd')
 function render(props) {
+
   app.create(appConfig as AppConfig).then(() => {
     const { container } = props
     initLogger(app.env.logger)
     ReactDOM.render(
-      <App />,
+      <App app={app} />,
       container ? container.querySelector(appRootId) : document.querySelector(appRootId)
     )
   })

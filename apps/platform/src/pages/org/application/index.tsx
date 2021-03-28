@@ -1,5 +1,6 @@
 import { confirm, toast, Spinner } from 'amis'
 import { Icon } from 'amis/lib/components/icons'
+import { cloneDeep } from 'lodash'
 import React, { useEffect } from 'react'
 
 import { Amis } from '@core/components/amis/schema'
@@ -26,6 +27,7 @@ const CardItem = (props: ItemProps) => {
   const { toggleDialog, appApis, item = {} } = props
 
   const { id, config = {}, user = {} } = item
+
   const isolation = isStrTrue(config.isolation)
 
   const itemBgStyle = {
@@ -37,9 +39,10 @@ const CardItem = (props: ItemProps) => {
 
   const onEditClick = (e: React.MouseEvent) => {
     e.stopPropagation()
-    config.username = user.username
-    config.user_id = user.id
-    toggleDialog(true, config)
+    const _config = cloneDeep(config)
+    _config.username = user.username
+    _config.user_id = user.id
+    toggleDialog(true, _config)
   }
 
   const onDelClick = (e: React.MouseEvent) => {

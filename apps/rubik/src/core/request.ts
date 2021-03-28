@@ -22,6 +22,7 @@ import { storeKey, appLoginRoute, msgKey } from './constants'
 // 日志模块 https://ovine.igroupes.com/org/docs/modules/logger
 // const log = logger.getLogger('app:request')
 // 退出登录
+
 export function logout(option) {
   const { tip = '您已经成功退出登录', loginEnv = 'manager' } = option || {}
 
@@ -197,7 +198,7 @@ appRequestIns.onSuccess = (source, option, response) => {
     return toast.info(source.msg, '系统提示')
 
   }
-  if (source && source.code === 401 && source.msg.indexOf('login') > -1 && option.api.indexOf('manager') > -1) {
+  if (source && Object.keys(source).length === 0 && response.responseText.indexOf('login') > -1 && option.api.indexOf('manager') > -1) {
     publish(msgKey.updateLoginEnv, loginEnv.manager)
     return logout({
       tip: '登录过期',

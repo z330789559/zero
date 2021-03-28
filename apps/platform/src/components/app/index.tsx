@@ -4,7 +4,6 @@ import { hot } from 'react-hot-loader/root'
 import { Switch, Router, Route } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 
-import { app } from '@core/app'
 import BactTop from '@core/components/back_top'
 import GlobalStyle from '@core/styled/global'
 import { useImmer } from '@core/utils/hooks'
@@ -22,7 +21,8 @@ export type State = Omit<AppContextState, 'setContext'> & {
   theme: string
 }
 
-export default hot(() => {
+export default hot((props) => {
+  const { app } = props
   const [state, setState] = useImmer<State>({
     ...initState,
     theme: app.theme.getName(),
@@ -30,11 +30,10 @@ export default hot(() => {
 
   const { theme } = state
   const contextValue = { ...state, setContext: setState as any }
-
   useRouteBySubApp()
 
   return (
-    <Router history={app.routerHistory}>
+    <Router history={app.routerHistory} >
       <ToastComponent
         closeButton
         className="m-t-xl"

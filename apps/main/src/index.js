@@ -37,7 +37,7 @@ const presetConfig = {
   staging: {
     entry: {
       center: '/platform/apps_center/',
-      app: '/platform/apps_app/',
+      app: '/platform/app/',
     },
   },
   production: {

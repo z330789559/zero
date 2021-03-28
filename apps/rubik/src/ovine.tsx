@@ -17,6 +17,7 @@ import entry from '~/core/entry'
 import env from '~/core/env'
 import appRequestIns from '~/core/request'
 import globalStyle from '~/styled/global'
+import './components/validCode'
 
 // 定义用到的主题变量, 可以扩展需要的主题
 declare module 'styled-components' {

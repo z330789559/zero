@@ -13,7 +13,7 @@ const env = {
   },
   // 本地开发
   localhost: {
-    disableLimit: true,
+    disableLimit: false,
     domains: {
       api: 'http://121.89.194.107:5222',
     },
@@ -26,7 +26,7 @@ const env = {
   // 测试环境
   staging: {
     domains: {
-      api: 'http://121.89.194.107:5222',
+      api: 'http://platform.yffrom.com',
     },
   },
   // 生产环境
@@ -34,7 +34,7 @@ const env = {
     disableLimit: true,
     isProd: false, // 标示是生产环境
     domains: {
-      api: 'http://sass.yffrom.com',
+      api: 'http://platform.yffrom.com',
     },
   },
 }

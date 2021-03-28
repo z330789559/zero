@@ -21,13 +21,13 @@ export function stashLayoutCtrl(type: 'get' | 'set', value?: boolean) {
 export const getModeBtnSchema = (isSysAdmin: boolean) => {
   const modeBtn = isSysAdmin
     ? {
-        icon: 'fa fa-eye pull-left',
-        label: '预览应用',
-      }
+      icon: 'fa fa-eye pull-left',
+      label: '预览应用',
+    }
     : {
-        icon: 'fa fa-pencil pull-left',
-        label: '设计应用',
-      }
+      icon: 'fa fa-pencil pull-left',
+      label: '设计应用',
+    }
 
   return {
     ...modeBtn,
@@ -51,9 +51,9 @@ export const getBrandSchema = (isSysAdmin?: boolean) => {
     link: isSysAdmin
       ? false
       : {
-          title,
-          href: '/',
-        },
+        title,
+        href: '/',
+      },
   }
 }
 
